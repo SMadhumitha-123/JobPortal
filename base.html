@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Job Portal{% endblock %}</title>
+    <!-- Add your CSS here -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Welcome to the Job Portal</h1>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+        
+            <li><a href="{% url 'job_list' %}">Job Listings</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'add_job' %}">Add Job</a></li>
+                                    {% endif %}
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="content">
+        {% block content %}
+        <!-- Content from other templates will go here -->
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Job Portal. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

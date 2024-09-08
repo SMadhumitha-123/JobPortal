@@ -1,0 +1,26 @@
+<form method="GET" action="{% url 'job_list' %}">
+    <input type="text" name="q" placeholder="Search by job title" value="{{ request.GET.q }}">
+    <select name="job_type">
+        <option value="">All</option>
+        <option value="Full-Time" {% if request.GET.job_type == "Full-Time" %}selected{% endif %}>Full-Time</option>
+        <option value="Part-Time" {% if request.GET.job_type == "Part-Time" %}selected{% endif %}>Part-Time</option>
+        <option value="Internship" {% if request.GET.job_type == "Internship" %}selected{% endif %}>Internship</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
+
+<h2>Job Listings</h2>
+
+<ul>
+    {% if jobs %}
+        {% for job in jobs %}
+            <li>
+                <a href="{% url 'apply_for_job' job.id %}">
+                    {{ job.title }} - {{ job.job_type }} - {{ job.company.name }} - {{ job.company.location }}
+                </a>
+            </li>
+        {% endfor %}
+    {% else %}
+        <p>No jobs found. Please try a different search or filter.</p>
+    {% endif %}
+</ul>
